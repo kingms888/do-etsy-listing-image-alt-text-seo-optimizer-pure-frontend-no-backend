@@ -1,0 +1,1 @@
+# do-etsy-listing-image-alt-text-seo-optimizer-pure-frontend-no-backend
