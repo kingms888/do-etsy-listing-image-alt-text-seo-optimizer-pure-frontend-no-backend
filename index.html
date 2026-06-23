@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Etsy Listing Image Alt Text & SEO Optimizer | Alt‑Text & CSV/JSON tools for Etsy sellers</title>
+  <meta name="description" content="Free pure‑frontend tool for Etsy sellers: generate SEO‑friendly alt text, bulk convert CSV↔JSON, preview meta tags, and check ATS‑style keywords. No backend, no uploads.">
+  <meta name="keywords" content="etsy listing image alt text, csv to shopify bulk listing, json to csv converter, developer seo meta tag, ats resume checker, etsy sellers, csv/json tools, developer tools, etsy listing image alt text & seo optimizer">
+  <meta name="author" content="EtsyAltText.works">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://etsyalttext.works/tool">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Etsy Listing Image Alt Text & SEO Optimizer">
+  <meta property="og:description" content="Generate alt text, convert CSV/JSON, preview meta tags – all in your browser. No data leaves your device.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://etsyalttext.works/tool">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f6f8fc;
+      color: #1e293b;
+      line-height: 1.5;
+      padding: 1.5rem 1rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #0b3b5c, #2b6a8f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      color: #475569;
+      max-width: 700px;
+      margin: 0.5rem auto 0;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid #e9edf2;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0f2b3d;
+    }
+
+    .card h2 i {
+      font-size: 1.4rem;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #334155;
+      display: block;
+      margin: 0.75rem 0 0.25rem;
+    }
+
+    textarea, input, select {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid #d1d9e6;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      background: #fafcff;
+      transition: 0.15s;
+      font-family: inherit;
+    }
+
+    textarea:focus, input:focus, select:focus {
+      outline: 2px solid #2b6a8f;
+      outline-offset: 1px;
+      border-color: transparent;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .btn {
+      background: #eef2f6;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #1e293b;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #1e4b6e;
+      color: white;
+      box-shadow: 0 2px 6px rgba(27, 67, 97, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: #123a55;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #b9c8da;
+    }
+
+    .btn-outline:hover {
+      background: #e9edf2;
+    }
+
+    .btn-sm {
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .result-box {
+      background: #f1f5f9;
+      border-radius: 0.75rem;
+      padding: 0.9rem;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      word-break: break-word;
+      white-space: pre-wrap;
+      max-height: 240px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+    }
+
+    .meta-preview {
+      background: #f8fafc;
+      padding: 0.8rem 1rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid #2b6a8f;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+    }
+
+    .badge {
+      background: #dbeafe;
+      color: #1e4b6e;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .inline-flex {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ad-placeholder {
+      background: #f1f5f9;
+      border-radius: 1rem;
+      padding: 1.2rem;
+      text-align: center;
+      border: 1px dashed #b9c8da;
+      color: #475569;
+      margin: 1.5rem 0;
+    }
+
+    .ad-placeholder span {
+      font-size: 0.8rem;
+      background: #e2e8f0;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+    }
+
+    .affiliate-section {
+      background: #f1f5f9;
+      border-radius: 1rem;
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .affiliate-section p {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .affiliate-section a {
+      color: #1e4b6e;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px dotted;
+    }
+
+    .privacy-note {
+      font-size: 0.75rem;
+      color: #64748b;
+      background: #ecf1f7;
+      padding: 0.8rem 1.2rem;
+      border-radius: 40px;
+      display: inline-block;
+      margin-top: 0.8rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: #5f6c80;
+      font-size: 0.8rem;
+      border-top: 1px solid #dce3ec;
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 720px) {
+      .grid-2col {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      header h1 {
+        font-size: 1.7rem;
+      }
+    }
+
+    /* utility */
+    .mt-1 { margin-top: 0.75rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .gap-1 { gap: 0.5rem; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <h1>📸 Alt Text & SEO Optimizer</h1>
+    <p>For Etsy sellers & developers — generate alt text, bulk convert CSV/JSON, preview meta tags, and check ATS keywords. <strong>100% browser‑side.</strong></p>
+  </header>
+
+  <!-- Ad placeholder (visible) -->
+  <div class="ad-placeholder">
+    <span>📢 AD</span>
+    <p style="margin-top:0.3rem"><strong>Sponsored:</strong> Scale your Etsy shop — <a href="#" style="color:#1e4b6e;">Try Marmalead</a> for keyword research (affiliate)</p>
+  </div>
+
+  <!-- Core tool grid: left column = alt text generator + CSV/JSON, right = meta preview + ATS check -->
+  <div class="grid-2col">
+    <!-- LEFT column -->
+    <div class="card">
+      <h2><span>🖼️</span> Alt Text Generator + CSV↔JSON</h2>
+      <label for="productTitle">Product title (Etsy listing)</label>
+      <input type="text" id="productTitle" placeholder="e.g. Handmade Wool Beanie – Forest Green" value="Handmade Wool Beanie – Forest Green">
+
+      <label for="keywords">Keywords (comma separated)</label>
+      <input type="text" id="keywords" placeholder="winter hat, eco-friendly, gift for him" value="winter hat, eco-friendly, beanie, unisex">
+
+      <div class="button-group">
+        <button class="btn btn-primary" id="generateAltBtn">✨ Generate alt text</button>
+        <button class="btn btn-outline btn-sm" id="copyAltBtn">📋 Copy</button>
+      </div>
+      <div class="result-box" id="altResult" aria-live="polite">Handmade Wool Beanie – Forest Green. Eco‑friendly winter hat, unisex beanie, perfect gift. [Etsy]</div>
+
+      <hr style="margin: 1.2rem 0; border: 0; border-top: 1px solid #e2e8f0;">
+
+      <label for="csvInput">CSV (or JSON) paste / edit</label>
+      <textarea id="csvInput" rows="3" placeholder="title,price,tags&#10;Beanie,29.90,wool">title,price,tags
+Beanie,29.90,wool</textarea>
+      <div class="button-group">
+        <button class="btn btn-outline btn-sm" id="csvToJsonBtn">CSV → JSON</button>
+        <button class="btn btn-outline btn-sm" id="jsonToCsvBtn">JSON → CSV</button>
+        <button class="btn btn-outline btn-sm" id="copyConvertBtn">📋 Copy output</button>
+      </div>
+      <div class="result-box" id="convertResult" aria-live="polite">[{"title":"Beanie","price":"29.90","tags":"wool"}]</div>
+      <p style="font-size:0.75rem; color:#64748b; margin-top:0.4rem;">Supports simple arrays / objects. No upload, stays local.</p>
+    </div>
+
+    <!-- RIGHT column -->
+    <div class="card">
+      <h2><span>🏷️</span> SEO Meta Tag Preview & ATS Check</h2>
+      <label for="metaTitle">Meta title (max 60)</label>
+      <input type="text" id="metaTitle" value="Handmade Wool Beanie | Etsy Shop" maxlength="70">
+      <label for="metaDesc">Meta description (max 160)</label>
+      <textarea id="metaDesc" rows="2" maxlength="165">Eco-friendly handmade wool beanie. Perfect winter gift. Unisex, forest green.</textarea>
+      <div class="button-group">
+        <button class="btn btn-primary btn-sm" id="updateMetaPreviewBtn">🔍 Update preview</button>
+        <button class="btn btn-outline btn-sm" id="copyMetaBtn">📋 Copy meta</button>
+      </div>
+      <div class="meta-preview" id="metaPreviewBlock">
+        <div style="color:#0b3b5c;font-weight:600;" id="previewTitle">Handmade Wool Beanie | Etsy Shop</div>
+        <div style="color:#475569;" id="previewDesc">Eco-friendly handmade wool beanie. Perfect winter gift. Unisex, forest green.</div>
+        <div style="color:#0b3b5c;font-size:0.75rem;">https://www.etsy.com/listing/...</div>
+      </div>
+
+      <label for="atsResumeText" style="margin-top:1rem;">📄 ATS resume / keyword checker</label>
+      <textarea id="atsResumeText" rows="2" placeholder="Paste job description or keywords ...">Etsy seller, SEO, alt text, CSV, JSON, developer tools</textarea>
+      <button class="btn btn-outline btn-sm" id="checkAtsBtn">🔎 Check ATS keywords</button>
+      <div class="result-box" id="atsResult" aria-live="polite">✅ Found: Etsy, SEO, alt text, CSV, JSON, developer tools (6)</div>
+    </div>
+  </div>
+
+  <!-- Affiliate / resource placeholder -->
+  <div class="affiliate-section">
+    <p><strong>🔗 Resources for Etsy sellers</strong> — <a href="#">Etsy SEO Guide</a> · <a href="#">Alt Text Best Practices</a> · <a href="#">Bulk Listing Tools</a></p>
+    <p style="font-size:0.8rem;">📌 Some links are affiliate. We may earn a small commission.</p>
+  </div>
+
+  <!-- Privacy note + event reporting -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.8rem;">
+    <div class="privacy-note">
+      🔒 <strong>Privacy:</strong> Events may be counted anonymously for product improvement. No credentials, no tracking, no scraping.
+    </div>
+    <div style="font-size:0.75rem; color:#5f6c80;">
+      <span>⚙️ v1.0 · pure frontend</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made for Etsy sellers & developers · All processing happens in your browser. No data leaves your device.</p>
+  </footer>
+</div>
+
+<script>
+  (function() {
+    // ---------- event reporting (privacy safe) ----------
+    function reportEvent(name, payload) {
+      if (typeof window.ORGANISM_METRICS_ENDPOINT === 'string' && window.ORGANISM_METRICS_ENDPOINT.length > 0) {
+        try {
+          const body = JSON.stringify({ event: name, payload: payload || {}, timestamp: Date.now() });
+          fetch(window.ORGANISM_METRICS_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: body,
+            keepalive: true
+          }).catch(() => {}); // silently ignore
+        } catch (e) { /* noop */ }
+      }
+    }
+
+    // ---------- DOM refs ----------
+    const productTitle = document.getElementById('productTitle');
+    const keywords = document.getElementById('keywords');
+    const generateAltBtn = document.getElementById('generateAltBtn');
+    const altResult = document.getElementById('altResult');
+    const copyAltBtn = document.getElementById('copyAltBtn');
+
+    const csvInput = document.getElementById('csvInput');
+    const csvToJsonBtn = document.getElementById('csvToJsonBtn');
+    const jsonToCsvBtn = document.getElementById('jsonToCsvBtn');
+    const copyConvertBtn = document.getElementById('copyConvertBtn');
+    const convertResult = document.getElementById('convertResult');
+
+    const metaTitle = document.getElementById('metaTitle');
+    const metaDesc = document.getElementById('metaDesc');
+    const updateMetaPreviewBtn = document.getElementById('updateMetaPreviewBtn');
+    const copyMetaBtn = document.getElementById('copyMetaBtn');
+    const previewTitle = document.getElementById('previewTitle');
+    const previewDesc = document.getElementById('previewDesc');
+
+    const atsResumeText = document.getElementById('atsResumeText');
+    const checkAtsBtn = document.getElementById('checkAtsBtn');
+    const atsResult = document.getElementById('atsResult');
+
+    // ---------- helper: copy to clipboard ----------
+    function copyToClipboard(text, eventName = 'copy_action') {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          reportEvent(eventName, { contentLength: text.length });
+        }).catch(() => {});
+      } else {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        reportEvent(eventName, { contentLength: text.length, fallback: true });
+      }
+    }
+
+    // ---------- 1. Alt text generator ----------
+    function generateAltText() {
+      const title = productTitle.value.trim() || 'Etsy product';
+      const kw = keywords.value.trim();
+      let alt = title;
+      if (kw) {
+        const kwArr = kw.split(',').map(s => s.trim()).filter(Boolean);
+        if (kwArr.length) {
+          alt += '. ' + kwArr.slice(0, 5).join(', ');
+        }
+      }
+      alt += ' [Etsy]';
+      altResult.textContent = alt;
+      reportEvent('generate_alt', { titleLength: title.length, keywordCount: kw.split(',').length });
+      return alt;
+    }
+
+    generateAltBtn.addEventListener('click', function(e) {
+      generateAltText();
+    });
+
+    copyAltBtn.addEventListener('click', function() {
+      const text = altResult.textContent;
+      if (text) copyToClipboard(text, 'copy_alt');
+    });
+
+    // ---------- 2. CSV / JSON converter ----------
+    function csvToJson(csvText) {
+      const lines = csvText.split(/\r?\n/).filter(line => line.trim() !== '');
+      if (lines.length < 2) return [];
+      const headers = lines[0].split(',').map(h => h.trim());
+      const result = [];
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim());
+        if (values.length === headers.length) {
+          const obj = {};
+          headers.forEach((h, idx) => { obj[h] = values[idx]; });
+          result.push(obj);
+        }
+      }
+      return result;
+    }
+
+    function jsonToCsv(jsonArray) {
+      if (!Array.isArray(jsonArray) || jsonArray.length === 0) return '';
+      const headers = Object.keys(jsonArray[0]);
+      const csvRows = [headers.join(',')];
+      for (const row of jsonArray) {
+        const vals = headers.map(h => {
+          const val = row[h] !== undefined ? String(row[h]) : '';
+          return val.includes(',') ? `"${val}"` : val;
+        });
+        csvRows.push(vals.join(','));
+      }
+      return csvRows.join('\n');
+    }
+
+    csvToJsonBtn.addEventListener('click', function() {
+      const input = csvInput.value;
+      try {
+        const json = csvToJson(input);
+        if (json.length === 0) {
+          convertResult.textContent = '⚠️ Could not parse CSV. Check headers/rows.';
+          return;
+        }
+        convertResult.textContent = JSON.stringify(json, null, 2);
+        reportEvent('csv_to_json', { rows: json.length });
+      } catch (e) {
+        convertResult.textContent = '❌ Error: ' + e.message;
+      }
+    });
+
+    jsonToCsvBtn.addEventListener('click', function() {
+      const input = csvInput.value.trim();
+      let parsed;
+      try {
+        parsed = JSON.parse(input);
+      } catch (e) {
+        convertResult.textContent = '❌ Invalid JSON. Paste a valid JSON array.';
+        return;
+      }
+      if (!Array.isArray(parsed) || parsed.length === 0) {
+        convertResult.textContent = '⚠️ JSON must be a non‑empty array of objects.';
+        return;
+      }
+      const csv = jsonToCsv(parsed);
+      convertResult.textContent = csv;
+      reportEvent('json_to_csv', { rows: parsed.length });
+    });
+
+    copyConvertBtn.addEventListener('click', function() {
+      const text = convertResult.textContent;
+      if (text && !text.startsWith('⚠') && !text.startsWith('❌')) {
+        copyToClipboard(text, 'copy_convert');
+      } else {
+        copyToClipboard(text || '', 'copy_convert');
+      }
+    });
+
+    // ---------- 3. Meta preview ----------
+    function updateMetaPreview() {
+      const title = metaTitle.value.trim() || 'Etsy listing';
+      const desc = metaDesc.value.trim() || 'Etsy product description.';
+      previewTitle.textContent = title.slice(0, 70);
+      previewDesc.textContent = desc.slice(0, 165);
+      reportEvent('meta_preview', { titleLen: title.length, descLen: desc.length });
+    }
+
+    updateMetaPreviewBtn.addEventListener('click', updateMetaPreview);
+    copyMetaBtn.addEventListener('click', function() {
+      const metaText = `<meta name="title" content="${previewTitle.textContent}">\n<meta name="description" content="${previewDesc.textContent}">`;
+      copyToClipboard(metaText, 'copy_meta');
+    });
+
+    // ---------- 4. ATS keyword checker ----------
+    checkAtsBtn.addEventListener('click', function() {
+      const text = atsResumeText.value.trim();
+      if (!text) {
+        atsResult.textContent = '⚠️ Paste some text to check.';
+        return;
+      }
+      // simple keyword extraction: common Etsy / dev terms
+      const commonKeywords = ['etsy', 'seo', 'alt text', 'csv', 'json', 'developer', 'listing', 'shop', 'handmade', 'keyword', 'bulk', 'convert', 'resume', 'ats', 'meta', 'tag', 'optimize', 'seller', 'inventory', 'shopify', 'woocommerce'];
+      const lowerText = text.toLowerCase();
+      const found = commonKeywords.filter(kw => lowerText.includes(kw));
+      const count = found.length;
+      atsResult.textContent = count > 0 
+        ? `✅ Found ${count} keyword${count > 1 ? 's' : ''}: ${found.join(', ')}`
+        : 'ℹ️ No common ATS keywords found. Try adding terms like "SEO", "CSV", "Etsy".';
+      reportEvent('ats_check', { keywordCount: count });
+    });
+
+    // ---------- initial event: tool loaded ----------
+    reportEvent('tool_loaded', { page: 'etsy_alt_text_optimizer' });
+
+    // ---------- auto init meta preview ----------
+    updateMetaPreview();
+
+    // ---------- extra: generate alt on page load? (optional) ----------
+    // generateAltText(); // already set via default value
+  })();
+</script>
+
+<!-- window.ORGANISM_METRICS_ENDPOINT example (disabled by default) -->
+<!-- <script> window.ORGANISM_METRICS_ENDPOINT = 'https://your-metrics.example.com/event'; </script> -->
+
+<section data-organism-discovery="hub" style="margin:32px auto 20px;max-width:1040px;padding:16px;border-top:1px solid #d9e2ec;color:#475569;font:14px/1.5 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <strong style="display:block;color:#0f172a;margin-bottom:6px">More free browser tools</strong>
+  <p style="margin:0 0 8px">This page is part of an autonomous micro-tool network. Explore the live tool directory and related utilities.</p>
+  <p style="margin:0"><a href="https://kingms888.github.io/do-digital-organism-index/" style="color:#0f766e;font-weight:700">Open the tool directory</a> </p>
+</section>
+</body>
+</html>
